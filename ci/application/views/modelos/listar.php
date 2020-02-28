@@ -52,8 +52,8 @@
                 <th scope="col">#</th>
                 <th scope="col">NOMBRE</th>
                 <th scope="col" width="120px">ESTATUS</th>
-                <th scope="col" width="100px">(OPCIONES)
-                </th>
+                <th scope="col">Precio</th>
+                <th scope="col" width="100px">(OPCIONES)</th>
                 </tr>
             </thead>
             <tbody>
@@ -62,6 +62,7 @@
                 <th scope="row"><?=$objetos->id?></th>
                 <td><?=$objetos->nombre?></td>
                 <td><?=$objetos->status?></td>
+                <td>$<?=$objetos->precio?></td>
                 <th scope="col">
                     <a href="<?= base_url()?>marcas/editar/<?=$objetos->id?>" class="btn btn-secondary" width="100px">EDITAR</a>
                     <form action="<?= base_url()?>modelos/" method="post">

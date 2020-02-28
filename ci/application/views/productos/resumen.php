@@ -15,13 +15,14 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php foreach($arrPruebas as $objetos)  {?>
                             <tr>
-                                <td>1</td>
-                                <td>Nombre</td>
-                                <td>Direccion</td>
-                                <td>Status</td>
-                                <td>Total</td>
-                            </tr>
+                            <th scope="row"><?=$objetos->id?></th>
+                            <td><?=$objetos->nombre_cliente?></td>
+                            <td><?=$objetos->direccion?></td>
+                            <td><?=$objetos->estatus?></td>
+                            <td>$</td>
+                            <?php } ?>
                         </tbody>
                     </table> 
                 </div>   
@@ -32,15 +33,15 @@
                 <table class="table" border="1">
                     <tr>
                         <td>SubTotal del Día</td>
-                        <td>$550</td>
+                        <td>$</td>
                     </tr>
                     <tr>
                         <td>Iva</td>
-                        <td>$60</td>
+                        <td>$</td>
                     </tr>
                     <tr>
                         <td>Total del Día</td>
-                        <td>$660</td>
+                        <td>$</td>
                     </tr>
                 </table> 
             </div>
