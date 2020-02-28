@@ -3,7 +3,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-6">
-                <form action="<?= base_url()?>marcas/guardar" method="POST">
+                <form id="frmAgregarCarrito" action="<?= base_url()?>productos/agregarCarrito" method="POST">
                     <div class="form-group">
                         <label for="txtId">NOMBRE:</label>
                         <input type="text" name="intId" class="form-control" id="txtId" placeholder="Ingrese el nombre">
@@ -16,21 +16,29 @@
                         <label for="txtDescripcion">DIRECCION DE ENTREGA:</label>
                         <textarea class="form-control" name="strDireccion" id="txtDireccion" placeholder="Ingrese su dirección"></textarea>
                     </div>
+                    <button type="submit">Guardar</button>
+                </form>  
+                
+        
                     <div class="form-group">
                         <label for="txtProducto">SELECCIONE LA MARCA:</label>
                         <div class="form-group">
-                            <select name="intMarca" id="cmbMarca" class="form-control"  required>
+                            <form id="frmCargarModelos" action="<?=base_url()?>productos" method="POST">    
+                                <select name="intMarca" id="cmbMarca" class="form-control"  onchange="submit();">
                                 <option value="0">[Marca]</option>
                                 <?php foreach($arrMarcas as $objetos)  {?>
                                     <option value="<?=$objetos->id?>" <?php if($objetos->id == $intMarca) echo 'selected'?>><?=$objetos->nombre?></option>
                                 <?php } ?>
-                            </select>
+                                </select>    
+                            </form>
                         </div>
-                    </div>   
+                    </div> 
+                
+                    <form id="frmAgregarCarrito" action="<?= base_url()?>productos/agregarCarrito" method="POST">  
                     <div class="form-group">
                         <label for="txtProducto">SELECCIONE EL MODELO:</label>
                         <div class="form-group">
-                            <select name="intModelos" id="cmbModelos" class="form-control"  required>
+                        <select name="intModelos" id="cmbModelos" class="form-control" required>
                                 <option value="0">[Modelos]</option>
                                 <?php foreach($arrModelos as $objetosMod)  {?>
                                     <option value="<?=$objetosMod->id?>" <?php if($objetosMod->id == $intMarca) echo 'selected'?>><?=$objetosMod->nombre?></option>
@@ -42,23 +50,7 @@
                         <label for="txtProducto">CANTIDAD:</label>
                         <input type="number" class="form-control" name="intCantidad" id="txtCantidad" max="50" min="0">
                     </div>
-                    <button type="submit" class="btn btn-info float-right" data-toggle="modal" data-target="#Modal1">AGREGAR PRODUCTO</button>
-                    <div class="modal fade" id="Modal1" tabindex="-1" role="dialog" aria-labelledby="lblModal1" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="lblModal">GENIAL!!!</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            </div>
-                            <div class="modal-body">
-                                Producto agregado correctamente
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">ACEPTAR</button>
-                            </div>
-                            </div>
-                        </div>
-                    </div>        
+                    <button type="button" class="btn btn-info float-right" onclick="submit();" >AGREGAR PRODUCTO</button>   
                 </form>
             </div>
             <div class="col-6">
@@ -73,12 +65,15 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php foreach($arrProductos as $obj)  {?>
                             <tr>
-                                <td>1</td>
-                                <td>NOMBRE</td>
-                                <td>Cantidad</td>
-                                <td>Precio</td>
+                                <td><?=$obj->id ?></td>
+                                <td><?=$obj->nombre ?></td>
+                                <td><?=$obj->cantidad ?></td>
+                                <td><?=$obj->precio ?></td>
                             </tr>
+                            <?php }?>
+                            
                         </tbody>
                     </table> 
                 </div>       
