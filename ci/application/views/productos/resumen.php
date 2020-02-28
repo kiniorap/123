@@ -36,7 +36,7 @@
                         <td>$</td>
                     </tr>
                     <tr>
-                        <td>Iva</td>
+                        <td>Iva 16%</td>
                         <td>$</td>
                     </tr>
                     <tr>
