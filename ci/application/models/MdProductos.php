@@ -4,15 +4,10 @@
         {
             parent::__construct();
         }
-        public function listar(){
-            $this->db->select("id,marca_id,nombre,CASE status WHEN 1 THEN 'Activo' WHEN 2 THEN 'Cancelado' ELSE 'Otro' END AS status");
+        public function listar($intMarcaId){
+            $this->db->select("id,marca_id,nombre,precio,CASE status WHEN 1 THEN 'Activo' WHEN 2 THEN 'Cancelado' ELSE 'Otro' END AS status");
             $this->db->from ('modelos');
-            $consulta=$this->db->get();
-            return $consulta->result();
-        }
-        public function reporte(){
-            $this->db->select("id_pedidos,id_modelos,cantidad,precio");
-            $this->db->from ('resumen_pedidos');
+            $this->db->where('marca_id',$intMarcaId);  
             $consulta=$this->db->get();
             return $consulta->result();
         }

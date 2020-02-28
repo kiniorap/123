@@ -17,7 +17,7 @@
                         <textarea class="form-control" name="strDireccion" id="txtDireccion" placeholder="Ingrese su dirección"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="txtProducto">SELECCIONE LA MARCA Y EL MODELO DEL PRODUCTO:</label>
+                        <label for="txtProducto">SELECCIONE LA MARCA:</label>
                         <div class="form-group">
                             <select name="intMarca" id="cmbMarca" class="form-control"  required>
                                 <option value="0">[Marca]</option>
@@ -25,15 +25,19 @@
                                     <option value="<?=$objetos->id?>" <?php if($objetos->id == $intMarca) echo 'selected'?>><?=$objetos->nombre?></option>
                                 <?php } ?>
                             </select>
-                            <br>
+                        </div>
+                    </div>   
+                    <div class="form-group">
+                        <label for="txtProducto">SELECCIONE EL MODELO:</label>
+                        <div class="form-group">
                             <select name="intModelos" id="cmbModelos" class="form-control"  required>
                                 <option value="0">[Modelos]</option>
                                 <?php foreach($arrModelos as $objetosMod)  {?>
-                                    <option value="<?=$objetos->id?>" <?php if($objetos->id == $intMarca) echo 'selected'?>><?=$objetosMod->nombre?></option>
+                                    <option value="<?=$objetosMod->id?>" <?php if($objetosMod->id == $intMarca) echo 'selected'?>><?=$objetosMod->nombre?></option>
                                 <?php }?>
                             </select>
                         </div>
-                    </div>   
+                    </div>  
                     <div class="form-group">
                         <label for="txtProducto">CANTIDAD:</label>
                         <input type="number" class="form-control" name="intCantidad" id="txtCantidad" max="50" min="0">
@@ -85,19 +89,19 @@
                 <table class="table" border="1">
                     <tr>
                         <td>SubTotal</td>
-                        <td>$550</td>
+                        <td>$</td>
                     </tr>
                     <tr>
                         <td>Costo de envio</td>
-                        <td>$50</td>
+                        <td>$</td>
                     </tr>
                     <tr>
                         <td>Iva</td>
-                        <td>$60</td>
+                        <td>$</td>
                     </tr>
                     <tr>
                         <td>Total a Pagar</td>
-                        <td>$660</td>
+                        <td>$</td>
                     </tr>
                 </table> 
             </div>

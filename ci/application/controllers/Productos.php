@@ -7,7 +7,7 @@
             $intMarca=$this->input->post('intMarca');
             if($intMarca=='')$intMarca=0; 
             $arrDatosDinamicos['arrMarcas']=$this->MdMarcas->buscarActivos();
-            $arrDatosDinamicos['arrModelos']=$this->MdModelos->listar($intMarca);
+            $arrDatosDinamicos['arrModelos']=$this->MdProductos->listar($intMarca);
             $arrDatosDinamicos['intMarca']=$intMarca;
             $arrDatos['strActivo']='productos';
             $arrDatos['strContenido']=$this->load->view('productos/agregar',$arrDatosDinamicos,TRUE);
