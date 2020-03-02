@@ -3,7 +3,7 @@
         function __construct(){
             parent::__construct();
         }
-        public function index($intMarca=1){
+        public function index(){
             $intMarca=$this->input->post('intMarca');
             if($intMarca=='')$intMarca=0; 
             $arrDatosDinamicos['arrMarcas']=$this->MdMarcas->buscarActivos();

@@ -1,5 +1,5 @@
 <?php
-    class Productos extends CI_Controller{
+    class Pedidos extends CI_Controller{
         function __construct(){
             parent::__construct();
         }
@@ -9,8 +9,8 @@
             $arrDatosDinamicos['arrMarcas']=$this->MdMarcas->buscarActivos();
             $arrDatosDinamicos['arrModelos']=$this->MdModelos->listar($intMarca);
             $arrDatosDinamicos['intMarca']=$intMarca;
-            $arrDatos['strActivo']='productos';
-            $arrDatos['strContenido']=$this->load->view('productos/agregar',$arrDatosDinamicos,TRUE);
+            $arrDatos['strActivo']='pedidos';
+            $arrDatos['strContenido']=$this->load->view('pedidos/agregar',$arrDatosDinamicos,TRUE);
             $this->load->view('principal',$arrDatos);
         }
         public function agregarCarrito(){
@@ -21,13 +21,10 @@
             $producto->cantidad='1';
             $producto->precio='15';
             $carrito[]=$producto;
-            
-            $arrDatosDinamicos['arrProductos']=$carrito;
-            $arrDatos['strActivo']='productos';
-            $arrDatos['strContenido']=$this->load->view('productos/agregar',$arrDatosDinamicos,TRUE);
+            $arrDatosDinamicos['arrPedidos']=$carrito;
+            $arrDatos['strActivo']='pedidos';
+            $arrDatos['strContenido']=$this->load->view('pedidos/agregar',$arrDatosDinamicos,TRUE);
             $this->load->view('principal',$arrDatos);
-        
-
         }
     }    
 ?>

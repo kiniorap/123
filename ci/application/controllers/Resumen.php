@@ -6,7 +6,7 @@
         public function index(){
             $arrDatosDinamico['arrPruebas']=$this->MdResumen->listar();
             $arrDatos['strActivo']='resumen';
-            $arrDatos['strContenido']=$this->load->view('productos/resumen',$arrDatosDinamico,TRUE);
+            $arrDatos['strContenido']=$this->load->view('pedidos/resumen',$arrDatosDinamico,TRUE);
             $this->load->view('principal',$arrDatos);
         }
     }    

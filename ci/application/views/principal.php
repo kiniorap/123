@@ -21,8 +21,8 @@
                 <li class="nav-item <?php if($strActivo=='modelos') echo 'active';?>">
                     <a class="nav-link" href="<?= base_url()?>modelos">Modelos</a>
                 </li>
-                <li class="nav-item <?php if($strActivo=='productos') echo 'active';?>">
-                    <a class="nav-link" href="<?= base_url()?>productos">Productos</a>
+                <li class="nav-item <?php if($strActivo=='pedidos') echo 'active';?>">
+                    <a class="nav-link" href="<?= base_url()?>pedidos">Pedidos</a>
                 </li>
                 <li class="nav-item <?php if($strActivo=='resumen') echo 'active';?>">
                     <a class="nav-link" href="<?= base_url()?>resumen">Resumen</a>

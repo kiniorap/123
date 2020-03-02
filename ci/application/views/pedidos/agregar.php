@@ -3,7 +3,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-6">
-                <form id="frmAgregarCarrito" action="<?= base_url()?>productos/agregarCarrito" method="POST">
+                <form id="frmAgregarCarrito" action="<?= base_url()?>pedidos/agregarCarrito" method="POST">
                     <div class="form-group">
                         <label for="txtId">NOMBRE:</label>
                         <input type="text" name="intId" class="form-control" id="txtId" placeholder="Ingrese el nombre">
@@ -23,7 +23,7 @@
                     <div class="form-group">
                         <label for="txtProducto">SELECCIONE LA MARCA:</label>
                         <div class="form-group">
-                            <form id="frmCargarModelos" action="<?=base_url()?>productos" method="POST">    
+                            <form id="frmCargarModelos" action="<?=base_url()?>pedidos" method="POST">    
                                 <select name="intMarca" id="cmbMarca" class="form-control"  onchange="submit();">
                                 <option value="0">[Marca]</option>
                                 <?php foreach($arrMarcas as $objetos)  {?>
@@ -34,7 +34,7 @@
                         </div>
                     </div> 
                 
-                    <form id="frmAgregarCarrito" action="<?= base_url()?>productos/agregarCarrito" method="POST">  
+                    <form id="frmAgregarCarrito" action="<?= base_url()?>pedidos/agregarCarrito" method="POST">  
                     <div class="form-group">
                         <label for="txtProducto">SELECCIONE EL MODELO:</label>
                         <div class="form-group">
@@ -65,7 +65,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($arrProductos as $obj)  {?>
+                            <?php foreach($arrPedidos as $obj)  {?>
                             <tr>
                                 <td><?=$obj->id ?></td>
                                 <td><?=$obj->nombre ?></td>
