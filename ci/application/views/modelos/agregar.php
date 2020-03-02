@@ -2,14 +2,14 @@
   <h5 class="card-header"><?php if(isset($registro) or set_value('intId')!='') echo 'Editar'; else echo 'Agregar';?> Marca <a href="<?= base_url()?>marcas" class="btn btn-secondary float-right">ATRAS</a></h5>
     <div class="card-body">
         <form action="<?= base_url()?>marcas/guardar" method="POST">
-            <input type="hidden" value="<?= $intMarcas?>">
+            <input type="text">
             <div class="form-group">
-                <label for="txtId">ID</label>
+                <label for="txtId">ID </label>
                 <input type="text" name="intId" class="form-control" id="txtId" placeholder="[Nuevo]" readonly="" value="<?php echo set_value('intId') ?><?php if(isset($registro)) echo $registro->id;?>">
             </div>
             <div class="form-group">
                 <label for="txtNombre">Nombre</label>
-                <input type="text" name="strNombre" class="form-control" id="txtNombre" placeholder="Ingrese el nombre" value="<?php echo set_value('strNombre')?><?php if(isset($registro)) echo $registro->nombre?> <?phpif($intMarcas==0) echo 'disabled'?>">
+                <input type="text" name="strNombre" class="form-control" id="txtNombre" placeholder="Ingrese el nombre" value="<?php echo set_value('strNombre')if(isset($registro)) echo $registro->nombre?>" disabled>
             </div>
             <?php echo form_error('strNombre')?>
             <div class="form-group">
