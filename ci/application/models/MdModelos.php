@@ -11,5 +11,12 @@
             $consulta=$this->db->get();
             return $consulta->result();
         }
+        public function buscarModelos($intModelosId){
+            $this->db->select("id,marca_id,nombre,precio,CASE status WHEN 1 THEN 'Activo' WHEN 2 THEN 'Cancelado' ELSE 'Otro' END AS status");
+            $this->db->from ('modelos');
+            $this->db->where('id',$intModelosId);  
+            $consulta=$this->db->get();
+            return $consulta->result();
+        }
     }    
 ?>

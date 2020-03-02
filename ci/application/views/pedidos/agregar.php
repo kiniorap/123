@@ -38,7 +38,7 @@
                     <div class="form-group">
                         <label for="txtProducto">SELECCIONE EL MODELO:</label>
                         <div class="form-group">
-                        <select name="intModelos" id="cmbModelos" class="form-control" required>
+                        <select name="intModelosId" id="cmbModelos" class="form-control" required>
                                 <option value="0">[Modelos]</option>
                                 <?php foreach($arrModelos as $objetosMod)  {?>
                                     <option value="<?=$objetosMod->id?>" <?php if($objetosMod->id == $intMarca) echo 'selected'?>><?=$objetosMod->nombre?></option>
@@ -65,12 +65,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($arrPedidos as $obj)  {?>
+                            <?php foreach($arrPedidos as $objPedidos)  {?>
                             <tr>
-                                <td><?=$obj->id ?></td>
-                                <td><?=$obj->nombre ?></td>
-                                <td><?=$obj->cantidad ?></td>
-                                <td><?=$obj->precio ?></td>
+                                <td><?=$objPedidos->id ?></td>
+                                <td><?=$objPedidos->nombre ?></td>
+                                <td><?=$objPedidos->cantidad ?></td>
+                                <td><?=$objPedidos->precio ?></td>
                             </tr>
                             <?php }?>
                             
