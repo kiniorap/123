@@ -42,6 +42,7 @@
             foreach ($this->carrito as $objModelo) {
                 $dblSubTotal+=$objModelo->subTotal;
             }
+            $intCostoEnvio=$this->input->post('intCostoEnvio');
             $arrDatosDinamicos['dblSubTotal']=$dblSubTotal;
             $arrDatosDinamicos['arrPedidos']=$this->carrito;
             $arrDatos['strActivo']='pedidos';

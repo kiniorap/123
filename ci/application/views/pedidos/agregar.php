@@ -16,10 +16,12 @@
                         <label for="txtDescripcion">DIRECCION DE ENTREGA:</label>
                         <textarea class="form-control" name="strDireccion" id="txtDireccion" placeholder="Ingrese su dirección"></textarea>
                     </div>
+                    <div class="form-group">
+                        <label for="txtId">COSTO DE ENVIO:</label>
+                        <input type="text" name="intCostoEnvio" class="form-control" id="intCostoEnvio" placeholder="Ingrese el Costo de Envío">
+                    </div>
                     <button type="submit">Guardar</button>
                 </form>  
-                
-        
                     <div class="form-group">
                         <label for="txtProducto">SELECCIONE LA MARCA:</label>
                         <div class="form-group">
@@ -33,7 +35,6 @@
                             </form>
                         </div>
                     </div> 
-                
                     <form id="frmAgregarCarrito" action="<?= base_url()?>pedidos/agregarCarrito" method="POST">  
                     <div class="form-group">
                         <label for="txtProducto">SELECCIONE EL MODELO:</label>
@@ -48,8 +49,9 @@
                     </div>  
                     <div class="form-group">
                         <label for="txtProducto">CANTIDAD:</label>
-                        <input type="number" class="form-control" name="intCantidad" id="txtCantidad" max="50" min="0">
+                        <input type="number" class="form-control" name="intCantidad" id="txtCantidad" max="50" min="0" placeholder="Ingrese la cantidad del producto">
                     </div>
+                    
                     <button type="button" class="btn btn-info float-right" onclick="submit();" >AGREGAR PRODUCTO</button>   
                 </form>
             </div>
