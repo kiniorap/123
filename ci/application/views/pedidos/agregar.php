@@ -96,11 +96,11 @@
                     </tr>
                     <tr>
                         <td>Iva</td>
-                        <td>$</td>
+                        <td>$ <?= $dblSubTotalIva?></td>
                     </tr>
                     <tr>
                         <td>Total a Pagar</td>
-                        <td>$</td>
+                        <td>$ <?= $dblTotal?></td>
                     </tr>
                 </table> 
             </div>

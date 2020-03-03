@@ -37,13 +37,21 @@
             echo var_dump($objModelo);
             $dblSubTotal=0;
             $dblCostoEnvio=0;
-            $dblIva=0;
+            $dblIva=.16;
             $dblTotal=0;
             foreach ($this->carrito as $objModelo) {
                 $dblSubTotal+=$objModelo->subTotal;
             }
-            $intCostoEnvio=$this->input->post('intCostoEnvio');
+            foreach ($this->carrito as $objModelo) {
+                $dblSubTotalIva=$dblSubTotal * $dblIva;
+            }
+            foreach ($this->carrito as $objModelo) {
+                $dblTotal=$dblSubTotal + $dblSubTotalIva;
+            }
+            //$intCostoEnvio=$this->input->post('intCostoEnvio');
             $arrDatosDinamicos['dblSubTotal']=$dblSubTotal;
+            $arrDatosDinamicos['dblSubTotalIva']=$dblSubTotalIva;
+            $arrDatosDinamicos['dblTotal']=$dblTotal;
             $arrDatosDinamicos['arrPedidos']=$this->carrito;
             $arrDatos['strActivo']='pedidos';
             $arrDatos['strContenido']=$this->load->view('pedidos/agregar',$arrDatosDinamicos,TRUE);
