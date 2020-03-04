@@ -2,6 +2,7 @@
     class Marcas extends CI_Controller{
         function __construct(){
             parent::__construct();
+            $this->load->model('MdMarcas');
         }
         public function index($arrDatos=[]){
             $arrDatosDinamico['arrMarcas']=$this->MdMarcas->listar();

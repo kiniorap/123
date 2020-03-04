@@ -2,6 +2,7 @@
     class Resumen extends CI_Controller{
         function __construct(){
             parent::__construct();
+            $this->load->model('MdResumen');
         }
         public function index(){
             $arrDatosDinamico['arrPruebas']=$this->MdResumen->listar();

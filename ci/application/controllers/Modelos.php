@@ -3,6 +3,7 @@
         function __construct(){
             parent::__construct();
             $this->load->model('MdModelos');
+            $this->load->model('MdMarcas');
         }
         public function index(){
             $intMarcasId=$this->input->post('intMarcasId');
