@@ -3,24 +3,24 @@
     <div class="card-body">
         <div class="row">
             <div class="col-6">
-                <form id="frmInformacionPedido" action="<?= base_url()?>pedidos" method="POST">
+                <form id="frmDatosEnvio" action="<?= base_url()?>pedidos/datosEnvio" method="POST">
+                <input type="hidden" name="intMarcaId" value="<?=$intMarcaId?>" > 
                     <div class="form-group">
                         <label for="txtNombre">NOMBRE:</label>
-                        <input type="text" name="strNombre" class="form-control" id="strNombre" placeholder="Ingrese el nombre" value="<?php echo set_value('strNombre')?>">
+                        <input type="text" name="strNombre" class="form-control" id="strNombre" onchange="submit();" placeholder="Ingrese el nombre" value="<?php echo set_value('strNombre')?>">
                     </div>
                     <div class="form-group">
                         <label for="txtFecha">FECHA DE ENTREGA:</label>
-                        <input type="date" name="dateFechaEntrega" class="form-control" id="dateFechaEntrega" value="<?php echo set_value('dateFechaEntrega')?>">
+                        <input type="date" name="dateFechaEntrega" class="form-control" id="dateFechaEntrega" onchange="submit();" value="<?php echo set_value('dateFechaEntrega')?>">
                     </div>
                     <div class="form-group">
                         <label for="txtDescripcion">DIRECCION DE ENTREGA:</label>
-                        <textarea class="form-control" name="strDireccion" id="strDireccion" placeholder="Ingrese su dirección"><?php echo set_value('strDireccion')?></textarea>
+                        <textarea class="form-control" name="strDireccion" id="strDireccion" onchange="submit();" placeholder="Ingrese su dirección"><?php echo set_value('strDireccion')?></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="txtId">COSTO DE ENVIO:</label>
-                        <input type="text" name="intCostoEnvio" class="form-control" id="intCostoEnvio" placeholder="Ingrese el Costo de Envío" value="<?php echo set_value('intCostoEnvio')?>">
+                        <label for="txtCostoEnvio">COSTO DE ENVIO:</label>
+                        <input type="text" name="dblCostoEnvio" class="form-control" id="dblCostoEnvio" onchange="submit();" placeholder="Ingrese el Costo de Envío" value="<?php echo set_value('dblCostoEnvio')?>">
                     </div>
-                    <button type="submit" >Guardar</button>
                 </form>  
                     <div class="form-group">
                         <label for="txtProducto">SELECCIONE LA MARCA:</label>
@@ -28,8 +28,8 @@
                             <form id="frmCargarModelos" action="<?=base_url()?>pedidos" method="POST">    
                                 <select name="intMarcaId" id="cmbMarca" class="form-control"  onchange="submit();">
                                 <option value="0">[Marca]</option>
-                                <?php foreach($arrMarcas as $objetos)  {?>
-                                    <option value="<?=$objetos->id?>" <?php if($objetos->id == $intMarcaId) echo 'selected'?>><?=$objetos->nombre?></option>
+                                <?php foreach($arrMarcas as $objMarcas)  {?>
+                                    <option value="<?=$objMarcas->id?>" <?php if($objMarcas->id == $intMarcaId) echo 'selected'?>><?=$objMarcas->nombre?></option>
                                 <?php } ?>
                                 </select>    
                             </form>
@@ -42,15 +42,15 @@
                         <div class="form-group">
                         <select name="intModeloId" id="cmbModelos" class="form-control" required>
                                 <option value="0">[Modelos]</option>
-                                <?php foreach($arrModelos as $objetosMod)  {?>
-                                    <option value="<?=$objetosMod->id?>" <?php if($objetosMod->id == $intMarcaId) echo 'selected'?>><?=$objetosMod->nombre?></option>
+                                <?php foreach($arrModelos as $objModelos)  {?>
+                                    <option value="<?=$objModelos->id?>" <?php if($objModelos->id == $intMarcaId) echo 'selected'?>><?=$objModelos->nombre?></option>
                                 <?php }?>
                             </select>
                         </div>
                     </div>  
                     <div class="form-group">
                         <label for="txtProducto">CANTIDAD:</label>
-                        <input type="number" class="form-control" name="intCantidad" id="txtCantidad" max="50" min="0" placeholder="Ingrese la cantidad del producto">
+                        <input type="number" class="form-control" name="intCantidad" id="txtCantidad" max="50" min="1" value="1">
                     </div>
                     <button type="button" class="btn btn-info float-right" onclick="submit();" >AGREGAR PRODUCTO</button>   
                 </form>
@@ -75,6 +75,12 @@
                                 <td><?=$objModelo->cantidad ?></td>
                                 <td><?=$objModelo->precio ?></td>
                                 <td><?=$objModelo->subTotal ?></td>
+                                <td>
+                                    <form action="<?= base_url()?>pedidos/eliminarCarrito/" method="post">
+                                        <input type="hidden" value="<?=$objModelo->id?>" name="intModeloId">
+                                        <button type="submit" class="btn btn-danger">ELIMINAR</button>
+                                    </form>
+                                </td>
                             </tr>
                             <?php }?>
                             
@@ -92,7 +98,7 @@
                     </tr>
                     <tr>
                         <td>Costo de envio</td>
-                        <td>$</td>
+                        <td>$ <?= $dblCostoEnvio?></td>
                     </tr>
                     <tr>
                         <td>Iva</td>
