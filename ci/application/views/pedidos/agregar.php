@@ -7,19 +7,28 @@
                 <input type="hidden" name="intMarcaId" value="<?=$intMarcaId?>" > 
                     <div class="form-group">
                         <label for="txtNombre">NOMBRE:</label>
-                        <input type="text" name="strNombre" class="form-control" id="strNombre" onchange="submit();" placeholder="Ingrese el nombre" value="<?php echo set_value('strNombre')?>">
+                        <input type="text" name="strNombre" class="form-control" id="strNombre" onchange="submit();" placeholder="Ingrese el nombre" value="<?php echo $this->objDatosEnvio->nombre?>">
                     </div>
                     <div class="form-group">
                         <label for="txtFecha">FECHA DE ENTREGA:</label>
-                        <input type="date" name="dateFechaEntrega" class="form-control" id="dateFechaEntrega" onchange="submit();" value="<?php echo set_value('dateFechaEntrega')?>">
+                        <input type="date" name="dateFechaEntrega" class="form-control" id="dateFechaEntrega" onchange="submit();" value="<?php echo $this->objDatosEnvio->fechaEntrega?>">
                     </div>
                     <div class="form-group">
                         <label for="txtDescripcion">DIRECCION DE ENTREGA:</label>
-                        <textarea class="form-control" name="strDireccion" id="strDireccion" onchange="submit();" placeholder="Ingrese su dirección"><?php echo set_value('strDireccion')?></textarea>
+                        <textarea class="form-control" name="strDireccion" id="strDireccion" onchange="submit();" placeholder="Ingrese su dirección"><?php echo $this->objDatosEnvio->direccion?></textarea>
                     </div>
                     <div class="form-group">
                         <label for="txtCostoEnvio">COSTO DE ENVIO:</label>
-                        <input type="text" name="dblCostoEnvio" class="form-control" id="dblCostoEnvio" onchange="submit();" placeholder="Ingrese el Costo de Envío" value="<?php echo set_value('dblCostoEnvio')?>">
+                        <input type="text" name="dblCostoEnvio" class="form-control" id="dblCostoEnvio" onchange="submit();" placeholder="Ingrese el Costo de Envío" value="<?php echo $this->objDatosEnvio->costoEnvio?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtEstatus">ESTATUS:</label>
+                        <select name="intEstatus" id="cmbEstatus" class="form-control" onchange= "submit();">
+                            <option value="0">[Seleccion el Estatus]</option>
+                            <option value="1"<?php if($intEstatus == 1) echo 'selected'?>>En Proceso</option>
+                            <option value="2"<?php if($intEstatus == 2) echo 'selected'?>>En Camino</option>
+                            <option value="3"<?php if($intEstatus == 3) echo 'selected'?>>Cancelado</option>
+                        </select>
                     </div>
                 </form>  
                     <div class="form-group">
@@ -98,7 +107,7 @@
                     </tr>
                     <tr>
                         <td>Costo de envio</td>
-                        <td>$ <?= $dblCostoEnvio?></td>
+                        <td>$ <?= $this->objDatosEnvio->costoEnvio?></td>
                     </tr>
                     <tr>
                         <td>Iva</td>

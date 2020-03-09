@@ -21,11 +21,13 @@
         public function index(){ //Cargar a nivel funcion con el simbolo de $ + variable ejemplo $intId
             $intMarcaId=$this->input->post('intMarcaId');//obtener un valor por POST desde el formulario
             if($intMarcaId=='')$intMarcaId=0;
+            $this->datosEnvio();
+            $dblCostoEnvio=$this->objDatosEnvio->costoEnvio;
+            $strNombre=$this->objDatosEnvio->nombre;
+            $strDireccion=$this->objDatosEnvio->direccion;
+            $dateFechaEntrega=$this->objDatosEnvio->fechaEntrega;
+            $intEstatus=$this->objDatosEnvio->estatus;
             if(count($this->arrCarrito)!=0){
-                $dblCostoEnvio=$this->objDatosEnvio->costoEnvio;
-                $strNombre=$this->objDatosEnvio->nombre;
-                $strDireccion=$this->objDatosEnvio->direccion;
-                $dateFechaEntrega=$this->objDatosEnvio->fechaEntrega;
                 $dblSubTotal=0;//declaracion de variables a nivel funcion
                 $dblIva=.16;//declaracion de variables a nivel funcion
                 $dblTotal=0;//declaracion de variables a nivel funcion
@@ -36,30 +38,25 @@
                     $dblTotal=$dblSubTotal + $dblSubTotalIva + $dblCostoEnvio;
                 }
             }else {
-                $dblCostoEnvio=$this->objDatosEnvio->costoEnvio;
-                $strNombre=$this->objDatosEnvio->nombre;
-                $strDireccion=$this->objDatosEnvio->direccion;
-                $dateFechaEntrega=$this->objDatosEnvio->fechaEntrega;
                 $dblSubTotal = 0;//declaracion de variables a nivel funcion
                 $dblCostoEnvio = 0;//declaracion de variables a nivel funcion
                 $dblSubTotalIva = 0;//declaracion de variables a nivel funcion
                 $dblTotal = 0;//declaracion de variables a nivel funcion
             }
-            echo var_dump($this->objDatosEnvio);
-            $arrDatosDinamicos['intMarcaId']=$intMarcaId;
-            $arrDatosDinamicos['dblSubTotal']=$dblSubTotal;
-            $arrDatosDinamicos['dblCostoEnvio']=$dblCostoEnvio;
-            $arrDatosDinamicos['dblSubTotalIva']=$dblSubTotalIva;
-            $arrDatosDinamicos['dblTotal']=$dblTotal;
-            $arrDatosDinamicos['strNombre']=$strNombre;
-            $arrDatosDinamicos['dateFechaEntrega']=$dateFechaEntrega;
-            $arrDatosDinamicos['strDireccion']=$strDireccion;
-            $arrDatosDinamicos['dblCostoEnvio']=$dblCostoEnvio; 
-            $arrDatosDinamicos['arrCarrito']=$this->arrCarrito;
-            $arrDatosDinamicos['arrMarcas']=$this->MdMarcas->buscarActivos();
-            $arrDatosDinamicos['arrModelos']=$this->MdModelos->listar($intMarcaId);
-            $arrDatos['strActivo']='pedidos';
-            $arrDatos['strContenido']=$this->load->view('pedidos/agregar',$arrDatosDinamicos,TRUE);
+            $arrDatosDinamicos['intMarcaId'] = $intMarcaId;
+            $arrDatosDinamicos['dblSubTotal'] = $dblSubTotal;
+            $arrDatosDinamicos['dblCostoEnvio'] = $dblCostoEnvio;
+            $arrDatosDinamicos['dblSubTotalIva'] = $dblSubTotalIva;
+            $arrDatosDinamicos['dblTotal'] = $dblTotal;
+            $arrDatosDinamicos['strNombre'] = $strNombre;
+            $arrDatosDinamicos['dateFechaEntrega'] = $dateFechaEntrega;
+            $arrDatosDinamicos['strDireccion'] = $strDireccion;
+            $arrDatosDinamicos['intEstatus'] = $intEstatus;
+            $arrDatosDinamicos['arrCarrito'] = $this->arrCarrito;
+            $arrDatosDinamicos['arrMarcas'] = $this->MdMarcas->buscarActivos();
+            $arrDatosDinamicos['arrModelos'] = $this->MdModelos->listar($intMarcaId);
+            $arrDatos['strActivo'] = 'pedidos';
+            $arrDatos['strContenido'] = $this->load->view('pedidos/agregar',$arrDatosDinamicos,TRUE);
             $this->load->view('principal',$arrDatos);
         }
         public function agregarCarrito(){
@@ -67,6 +64,30 @@
             $intModeloId=$this->input->post('intModeloId');//obtener por POST el valor desde el formulario
             $intCantidad=$this->input->post('intCantidad');//obtener por POST el valor desde el formulario
             $bolExisteModelo=FALSE;
+            $dblCostoEnvio=$this->objDatosEnvio->costoEnvio;
+            $strNombre=$this->objDatosEnvio->nombre;
+            $strDireccion=$this->objDatosEnvio->direccion;
+            $dateFechaEntrega=$this->objDatosEnvio->fechaEntrega;
+            $intEstatus=$this->objDatosEnvio->estatus;
+            echo var_dump($this->objDatosEnvio);
+
+            if(count($this->arrCarrito)!=0){
+                $dblSubTotal=0;//declaracion de variables a nivel funcion
+                $dblIva=.16;//declaracion de variables a nivel funcion
+                $dblTotal=0;//declaracion de variables a nivel funcion
+                $dblSubTotalIva=0;
+                foreach ($this->arrCarrito as $objModelo) {
+                    $dblSubTotal+=$objModelo->subTotal;
+                    $dblSubTotalIva=$dblSubTotal * $dblIva;
+                    $dblTotal=$dblSubTotal + $dblSubTotalIva + $dblCostoEnvio;
+                }
+            }else {
+                $dblSubTotal = 0;//declaracion de variables a nivel funcion
+                $dblCostoEnvio = 0;//declaracion de variables a nivel funcion
+                $dblSubTotalIva = 0;//declaracion de variables a nivel funcion
+                $dblTotal = 0;//declaracion de variables a nivel funcion
+            }
+
             foreach ($this->arrCarrito as $objModelo) {//recorrer el carrito
                 if ($objModelo->id == $intModeloId) {//evaluar si existe ID
                     $objModelo->cantidad += $intCantidad;
@@ -95,62 +116,66 @@
             $dblSubTotalIva=0; 
             foreach ($this->arrCarrito as $objModelo) {
                 $dblSubTotal+=$objModelo->subTotal;
-            }
-            foreach ($this->arrCarrito as $objModelo) {
                 $dblSubTotalIva=$dblSubTotal * $dblIva;
+                $dblTotal=$dblSubTotal + $dblSubTotalIva + $dblCostoEnvio;
             }
-            foreach ($this->arrCarrito as $objModelo) {
-                $dblTotal=$dblSubTotal + $dblSubTotalIva;
-            }
-
-            $arrDatosDinamicos['intMarcaId']=$intMarcaId;
-            $arrDatosDinamicos['dblSubTotal']=$dblSubTotal;
-            $arrDatosDinamicos['dblCostoEnvio']=$dblCostoEnvio;
-            $arrDatosDinamicos['dblSubTotalIva']=$dblSubTotalIva;
-            $arrDatosDinamicos['dblTotal']=$dblTotal;
-            $arrDatosDinamicos['arrCarrito']=$this->arrCarrito;
-            $arrDatosDinamicos['arrMarcas']=$this->MdMarcas->buscarActivos();
-            $arrDatosDinamicos['arrModelos']=$this->MdModelos->listar($intMarcaId);
-            $arrDatos['strActivo']='pedidos';
-            $arrDatos['strContenido']=$this->load->view('pedidos/agregar',$arrDatosDinamicos,TRUE);
+            $arrDatosDinamicos['intMarcaId'] = $intMarcaId;
+            $arrDatosDinamicos['dblSubTotal'] = $dblSubTotal;
+            $arrDatosDinamicos['dblCostoEnvio'] = $dblCostoEnvio;
+            $arrDatosDinamicos['dblSubTotalIva'] = $dblSubTotalIva;
+            $arrDatosDinamicos['dblTotal'] = $dblTotal;
+            $arrDatosDinamicos['strNombre'] = $strNombre;
+            $arrDatosDinamicos['dateFechaEntrega'] = $dateFechaEntrega;
+            $arrDatosDinamicos['strDireccion'] = $strDireccion;
+            $arrDatosDinamicos['intEstatus'] = $intEstatus;
+            $arrDatosDinamicos['arrCarrito'] = $this->arrCarrito;
+            $arrDatosDinamicos['arrMarcas'] = $this->MdMarcas->buscarActivos();
+            $arrDatosDinamicos['arrModelos'] = $this->MdModelos->listar($intMarcaId);
+            $arrDatos['strActivo'] = 'pedidos';
+            $arrDatos['strContenido'] = $this->load->view('pedidos/agregar',$arrDatosDinamicos,TRUE);
             $this->load->view('principal',$arrDatos);
         }
         public function eliminarCarrito(){
             $intMarcaId=$this->input->post('intMarcaId');//obtener por POST el valor desde el formulario
             $intModeloId=$this->input->post('intModeloId');//obtener por POST el valor desde el formulario
+            $dblCostoEnvio=$this->objDatosEnvio->costoEnvio;
+            $strNombre=$this->objDatosEnvio->nombre;
+            $strDireccion=$this->objDatosEnvio->direccion;
+            $dateFechaEntrega=$this->objDatosEnvio->fechaEntrega;
+            $intEstatus=$this->objDatosEnvio->estatus;
             $arrTemp = [];
             foreach ($this->arrCarrito as $objModelo) {//recorrer el carrito                     -----------------------------------
                 if ($objModelo->id != $intModeloId) {//evaluar si exite el ID                    ---- Esto Sirve para sustituir ----
                     $arrTemp[]=$objModelo;                                      //               ----         El Carrito        ----
                 }                                                               //               -----------------------------------
             }
+            if(count($this->arrCarrito)!=0){
+                $dblSubTotal=0;//declaracion de variables a nivel funcion
+                $dblIva=.16;//declaracion de variables a nivel funcion
+                $dblTotal=0;//declaracion de variables a nivel funcion
+                $dblSubTotalIva=0;
+                foreach ($this->arrCarrito as $objModelo) {
+                    $dblSubTotal+=$objModelo->subTotal;
+                    $dblSubTotalIva=$dblSubTotal * $dblIva;
+                    $dblTotal=$dblSubTotal + $dblSubTotalIva + $dblCostoEnvio;
+                }
+            }
             $this->arrCarrito=$arrTemp;
             $this->session->set_userdata('arrCarrito',$arrTemp);//asignar arrCarrito a una variable a sesion
-            $dblSubTotal=0;//declaracion de variables a nivel funcion
-            $dblCostoEnvio=0;//declaracion de variables a nivel funcion
-            $dblIva=.16;//declaracion de variables a nivel funcion
-            $dblTotal=0;//declaracion de variables a nivel funcion
-            $dblSubTotalIva=0;
-            foreach ($this->arrCarrito as $objModelo) {
-                $dblSubTotal+=$objModelo->subTotal;//calculo de una sumatoria de la variable subtotal que pertenece al objModelo
-            }
-            foreach ($this->arrCarrito as $objModelo) {
-                $dblSubTotalIva=$dblSubTotal * $dblIva;//calculo de la variable IVA subtotal*IVA
-            }
-            foreach ($this->arrCarrito as $objModelo) {
-                $dblTotal=$dblSubTotal + $dblSubTotalIva;//calculo dell total  
-            }
-            $arrDatosDinamicos['intMarcaId']=$intMarcaId;
-            $arrDatosDinamicos['dblSubTotal']=$dblSubTotal;
-            $arrDatosDinamicos['dblCostoEnvio']=$dblCostoEnvio;
-            $arrDatosDinamicos['dblSubTotalIva']=$dblSubTotalIva;
-            $arrDatosDinamicos['dblTotal']=$dblTotal;
-            $arrDatosDinamicos['intMarcaId']=$intMarcaId;
-            $arrDatosDinamicos['arrCarrito']=$this->arrCarrito;
-            $arrDatosDinamicos['arrMarcas']=$this->MdMarcas->buscarActivos();
-            $arrDatosDinamicos['arrModelos']=$this->MdModelos->listar($intMarcaId);
-            $arrDatos['strActivo']='pedidos';
-            $arrDatos['strContenido']=$this->load->view('pedidos/agregar',$arrDatosDinamicos,TRUE);
+            $arrDatosDinamicos['intMarcaId'] = $intMarcaId;
+            $arrDatosDinamicos['dblSubTotal'] = $dblSubTotal;
+            $arrDatosDinamicos['dblCostoEnvio'] = $dblCostoEnvio;
+            $arrDatosDinamicos['dblSubTotalIva'] = $dblSubTotalIva;
+            $arrDatosDinamicos['dblTotal'] = $dblTotal;
+            $arrDatosDinamicos['strNombre'] = $strNombre;
+            $arrDatosDinamicos['dateFechaEntrega'] = $dateFechaEntrega;
+            $arrDatosDinamicos['strDireccion'] = $strDireccion;
+            $arrDatosDinamicos['intEstatus'] = $intEstatus;
+            $arrDatosDinamicos['arrCarrito'] = $this->arrCarrito;
+            $arrDatosDinamicos['arrMarcas'] = $this->MdMarcas->buscarActivos();
+            $arrDatosDinamicos['arrModelos'] = $this->MdModelos->listar($intMarcaId);
+            $arrDatos['strActivo'] = 'pedidos';
+            $arrDatos['strContenido'] = $this->load->view('pedidos/agregar',$arrDatosDinamicos,TRUE);
             $this->load->view('principal',$arrDatos);
         }
         public function datosEnvio(){
@@ -160,36 +185,37 @@
             $dateFechaEntrega = $this->input->post('dateFechaEntrega');
             $strDireccion = $this->input->post('strDireccion');
             $dblCostoEnvio = $this->input->post('dblCostoEnvio');
+            $intEstatus = $this->input->post('intEstatus');
             $this->objDatosEnvio->nombre = $strNombre;//agregar las variables obtenidas por post al objeto
             $this->objDatosEnvio->fechaEntrega = $dateFechaEntrega;
             $this->objDatosEnvio->direccion = $strDireccion;
             $this->objDatosEnvio->costoEnvio = $dblCostoEnvio;
+            $this->objDatosEnvio->estatus = $intEstatus;
             echo var_dump($this->objDatosEnvio);
             $this->session->set_userdata('objDatosEnvio',$this->objDatosEnvio);//asignar arrCarrito a una variable a sesion
             $dblSubTotal=0;//declaracion de variables a nivel funcion
-            $dblCostoEnvio=0;//declaracion de variables a nivel funcion
             $dblIva=.16;//declaracion de variables a nivel funcion
             $dblTotal=0;//declaracion de variables a nivel funcion
             $dblSubTotalIva=0;
             foreach ($this->arrCarrito as $objModelo) {
                 $dblSubTotal+=$objModelo->subTotal;
                 $dblSubTotalIva=$dblSubTotal * $dblIva;
-                $dblTotal=$dblSubTotal + $dblSubTotalIva;
+                $dblTotal=$dblSubTotal + $dblSubTotalIva + $dblCostoEnvio;
             }
-            $arrDatosDinamicos['intMarcaId']=$intMarcaId;
-            $arrDatosDinamicos['dblSubTotal']=$dblSubTotal;
-            $arrDatosDinamicos['dblCostoEnvio']=$dblCostoEnvio;
-            $arrDatosDinamicos['dblSubTotalIva']=$dblSubTotalIva;
-            $arrDatosDinamicos['dblTotal']=$dblTotal;
-            $arrDatosDinamicos['strNombre']=$strNombre;
-            $arrDatosDinamicos['dateFechaEntrega']=$dateFechaEntrega;
-            $arrDatosDinamicos['strDireccion']=$strDireccion;
-            $arrDatosDinamicos['dblCostoEnvio']=$dblCostoEnvio; 
-            $arrDatosDinamicos['arrCarrito']=$this->arrCarrito;
-            $arrDatosDinamicos['arrMarcas']=$this->MdMarcas->buscarActivos();
-            $arrDatosDinamicos['arrModelos']=$this->MdModelos->listar($intMarcaId);
-            $arrDatos['strActivo']='pedidos';
-            $arrDatos['strContenido']=$this->load->view('pedidos/agregar',$arrDatosDinamicos,TRUE);
+            $arrDatosDinamicos['intMarcaId'] = $intMarcaId;
+            $arrDatosDinamicos['dblSubTotal'] = $dblSubTotal;
+            $arrDatosDinamicos['dblCostoEnvio'] = $dblCostoEnvio;
+            $arrDatosDinamicos['dblSubTotalIva'] = $dblSubTotalIva;
+            $arrDatosDinamicos['dblTotal'] = $dblTotal;
+            $arrDatosDinamicos['strNombre'] = $strNombre;
+            $arrDatosDinamicos['dateFechaEntrega'] = $dateFechaEntrega;
+            $arrDatosDinamicos['strDireccion'] = $strDireccion;
+            $arrDatosDinamicos['intEstatus'] = $intEstatus;
+            $arrDatosDinamicos['arrCarrito'] = $this->arrCarrito;
+            $arrDatosDinamicos['arrMarcas'] = $this->MdMarcas->buscarActivos();
+            $arrDatosDinamicos['arrModelos'] = $this->MdModelos->listar($intMarcaId);
+            $arrDatos['strActivo'] = 'pedidos';
+            $arrDatos['strContenido'] = $this->load->view('pedidos/agregar',$arrDatosDinamicos,TRUE);
             $this->load->view('principal',$arrDatos);
         }
     }    
