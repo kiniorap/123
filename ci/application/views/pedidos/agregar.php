@@ -1,5 +1,5 @@
 <div class="card">
-  <h5 class="card-header">Agregar Producto<a href="<?= base_url()?>marcas" class="btn btn-secondary float-right"*/>ATRAS</a></h5>
+  <h5 class="card-header">Agregar Producto<a href="<?= base_url()?>marcas" class="btn btn-secondary float-right">ATRAS</a></h5>
     <div class="card-body">
         <div class="row">
             <div class="col-6">
@@ -19,23 +19,23 @@
                     </div>
                     <div class="form-group">
                         <label for="txtCostoEnvio">COSTO DE ENVIO:</label>
-                        <input type="text" name="dblCostoEnvio" class="form-control" id="dblCostoEnvio" onchange="submit();" placeholder="Ingrese el Costo de Envío" value="<?php echo $this->objDatosEnvio->costoEnvio?>">
+                        <input type="number" name="dblCostoEnvio" class="form-control" id="dblCostoEnvio" onchange="submit();" placeholder="Ingrese el Costo de Envío" value="<?php echo $this->objDatosEnvio->costoEnvio?>">
                     </div>
                     <div class="form-group">
                         <label for="txtEstatus">ESTATUS:</label>
-                        <select name="intEstatus" id="cmbEstatus" class="form-control" onchange= "submit();">
+                        <select name="intEstatus" id="cmbEstatus" class="form-control" onchange = "submit();">
                             <option value="0">[Seleccion el Estatus]</option>
-                            <option value="1"<?php if($intEstatus == 1) echo 'selected'?>>En Proceso</option>
-                            <option value="2"<?php if($intEstatus == 2) echo 'selected'?>>En Camino</option>
-                            <option value="3"<?php if($intEstatus == 3) echo 'selected'?>>Cancelado</option>
+                            <option value="1"<?php if($this->objDatosEnvio->estatus == 1) echo 'selected'?>>En Proceso</option>
+                            <option value="2"<?php if($this->objDatosEnvio->estatus == 2) echo 'selected'?>>En Camino</option>
+                            <option value="3"<?php if($this->objDatosEnvio->estatus == 3) echo 'selected'?>>Cancelado</option>
                         </select>
                     </div>
                 </form>  
                     <div class="form-group">
                         <label for="txtProducto">SELECCIONE LA MARCA:</label>
                         <div class="form-group">
-                            <form id="frmCargarModelos" action="<?=base_url()?>pedidos" method="POST">    
-                                <select name="intMarcaId" id="cmbMarca" class="form-control"  onchange="submit();">
+                            <form id="frmCargarModelos" action="<?= base_url()?>pedidos" method="POST">    
+                                <select name="intMarcaId" id="cmbMarca" class="form-control"  onchange ="submit();">
                                 <option value="0">[Marca]</option>
                                 <?php foreach($arrMarcas as $objMarcas)  {?>
                                     <option value="<?=$objMarcas->id?>" <?php if($objMarcas->id == $intMarcaId) echo 'selected'?>><?=$objMarcas->nombre?></option>
@@ -107,7 +107,7 @@
                     </tr>
                     <tr>
                         <td>Costo de envio</td>
-                        <td>$ <?= $this->objDatosEnvio->costoEnvio?></td>
+                        <td>$ <?= $dblCostoEnvio?></td>
                     </tr>
                     <tr>
                         <td>Iva</td>
@@ -123,23 +123,10 @@
     </div>
 </div>
 <br>
-<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">CONCLUIR PEDIDO</button>
-<div class="modal fade" id="Modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title" id="ModalLabel">LISTO!!!</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        </div>
-        <div class="modal-body">
-            Se realizó de manera correcta
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">ACEPTAR</button>
-        </div>
-        </div>
-    </div>
-</div>      
+<form action="<?= base_url()?>pedidos/eliminarCarrito/" method="post">
+    <input type="hidden" value="<?=$objModelo->id?>" name="intModeloId">
+    <button type="submit" class="btn btn-primary float-right">CONCLUIR PEDIDO</button>
+</form>
 <?php
 
 ?>
