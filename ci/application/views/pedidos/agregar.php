@@ -69,10 +69,11 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">NOMBRE</th>
-                                <th scope="col" width="120px">Cantidad</th>
-                                <th scope="col" width="200px">Precio</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">Marca</th>
+                                <th scope="col">Modelo</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Precio</th>
                                 <th scope="col">Subtotal</th>
                             </tr>
                         </thead>
@@ -80,6 +81,7 @@
                             <?php foreach($arrCarrito as $objModelo)  {?>
                             <tr>
                                 <td><?=$objModelo->id ?></td>
+                                <td><?=$objModelo->marca_id ?></td>
                                 <td><?=$objModelo->nombre ?></td>
                                 <td><?=$objModelo->cantidad ?></td>
                                 <td><?=$objModelo->precio ?></td>
@@ -100,22 +102,22 @@
         </div>
         <div class="row justify-content-end">
             <div class="col-4">
-                <table class="table" border="1">
+                <table class="table" border="1" >
                     <tr>
                         <td>SubTotal</td>
-                        <td>$ <?= $dblSubTotal?></td>
+                        <td align="right">$ <?= $dblSubTotal?></td>
                     </tr>
                     <tr>
                         <td>Costo de envio</td>
-                        <td>$ <?= $dblCostoEnvio?></td>
+                        <td align="right">$ <?= $dblCostoEnvio?></td>
                     </tr>
                     <tr>
                         <td>Iva</td>
-                        <td>$ <?= $dblSubTotalIva?></td>
+                        <td align="right">$ <?= $dblSubTotalIva?></td>
                     </tr>
                     <tr>
                         <td>Total a Pagar</td>
-                        <td>$ <?= $dblTotal?></td>
+                        <td align="right">$ <?= $dblTotal?></td>
                     </tr>
                 </table> 
             </div>
@@ -123,7 +125,7 @@
     </div>
 </div>
 <br>
-<form action="<?= base_url()?>pedidos/eliminarCarrito/" method="post">
+<form action="<?= base_url()?>pedidos/guardar/" method="post">
     <input type="hidden" value="<?=$objModelo->id?>" name="intModeloId">
     <button type="submit" class="btn btn-primary float-right">CONCLUIR PEDIDO</button>
 </form>

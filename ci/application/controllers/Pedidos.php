@@ -37,7 +37,7 @@
             if ($dblCostoEnvio == NULL) {
                 $dblCostoEnvio = 0;
             }
-            echo var_dump($this->objDatosEnvio);
+            //echo var_dump($this->objDatosEnvio);
             $dblSubTotal = 0;//declaracion de variables a nivel funcion
             $dblIva=.16;//declaracion de variables a nivel funcion
             $dblSubTotalIva = 0;//declaracion de variables a nivel funcion
@@ -105,6 +105,7 @@
 
             if ($bolExisteModelo == FALSE) {
                 $arrModelos=$this->MdModelos->buscar($intModeloId);//asignar el arreglo que manda el metodo del modelo
+                echo var_dump($arrModelos);
                 if(count($arrModelos)!=0){
                     $objModelo=$arrModelos[0];//asignar el arreglo a un objeto
                     $objModelo->cantidad=$intCantidad;//asignarle el valor que que se obtuvo por post e ingresarlo al objeto
@@ -200,7 +201,6 @@
             if ($dblCostoEnvio == NULL) {
                 $dblCostoEnvio = 0;
             }
-            echo var_dump($this->objDatosEnvio);
             $dblSubTotal = 0;//declaracion de variables a nivel funcion
             $dblIva=.16;//declaracion de variables a nivel funcion
             $dblSubTotalIva = 0;//declaracion de variables a nivel funcion
@@ -234,7 +234,10 @@
             $this->load->view('principal',$arrDatos);
         }
         public function guardar(){
+            $objDatosPedido = new stdClass();
+            $objDatosPedido = $this->arrCarrito;
             $intId=$this->input->post('intId');
+            echo var_dump($this->arrCarrito);
             if($intId==''){
                 $this->form_validation->set_rules(
                     'strNombre', 'Nombre',
@@ -287,11 +290,5 @@
                 }
             }       
         }   
-        public function editar($intId,$EsEditarGuardar=FALSE){
-            if(!$EsEditarGuardar){$arrDatos['registro']= $this->MdMarcas->buscar($intId);}
-            $arrDatos['strActivo']='marcas';
-            $arrDatos['strContenido']=$this->load->view('marcas/agregar',$arrDatos,TRUE);
-            $this->load->view('principal',$arrDatos); 
-        }
     }    
 ?>
